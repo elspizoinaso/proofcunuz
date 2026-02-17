@@ -2,20 +2,19 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Proof Sistemi</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<header>
+Proof Listesi
+<br>
+<a href="admin.html" style="font-size:14px;">Admin Panel</a>
+</header>
+
 <div class="container">
-    <h1>Proof Panel</h1>
-
-    <input type="text" id="username" placeholder="Kullanıcı adı">
-    <input type="text" id="proof" placeholder="Proof linki">
-    <button onclick="addProof()">Gönder</button>
-
-    <div id="proofList"></div>
+<div id="proofList"></div>
 </div>
 
 <script type="module" src="app.js"></script>
