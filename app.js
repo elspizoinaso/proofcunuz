@@ -1,52 +1,83 @@
+import { firebaseConfig, ADMIN_PASSWORD } from "./config.js";
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
 getFirestore,
 collection,
 addDoc,
-getDocs
+getDocs,
+deleteDoc,
+doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAAKYEtIsAm-9KJZo7Q7QLWHy9kBTGrOmI",
-  authDomain: "proofcunuz.firebaseapp.com",
-  projectId: "proofcunuz",
-  storageBucket: "proofcunuz.firebasestorage.app",
-  messagingSenderId: "735014919300",
-  appId: "1:735014919300:web:4a80ff283ece6cc05cf6d1"
-};
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-window.addProof = async function () {
-    const username = document.getElementById("username").value;
-    const proof = document.getElementById("proof").value;
+/* ADMIN LOGIN */
+window.login = function(){
+    const pass = document.getElementById("pass").value;
+    if(pass === ADMIN_PASSWORD){
+        document.getElementById("panel").style.display="block";
+        loadAdmin();
+    }else{
+        alert("Şifre yanlış");
+    }
+}
 
-    if(!username || !proof) return alert("Boş bırakma");
+/* PROOF EKLE */
+window.addProof = async function(){
+    const user = document.getElementById("user").value;
+    const link = document.getElementById("link").value;
 
     await addDoc(collection(db,"proofs"),{
-        username,
-        proof,
+        user,
+        link,
         date:Date.now()
     });
 
-    loadProofs();
+    loadAdmin();
 }
 
-async function loadProofs(){
-    const querySnapshot = await getDocs(collection(db,"proofs"));
+/* ANA SAYFA LİSTE */
+async function loadPublic(){
     const list = document.getElementById("proofList");
+    if(!list) return;
+
+    const snap = await getDocs(collection(db,"proofs"));
     list.innerHTML="";
 
-    querySnapshot.forEach(doc=>{
-        const data = doc.data();
-
+    snap.forEach(d=>{
+        const data = d.data();
         list.innerHTML += `
-        <div class="proofCard">
-            <b>${data.username}</b><br>
-            <a href="${data.proof}" target="_blank">${data.proof}</a>
+        <div class="card">
+            <b>${data.user}</b><br>
+            <a href="${data.link}" target="_blank">${data.link}</a>
         </div>`;
     });
 }
 
-loadProofs();
+/* ADMİN LİSTE + SİLME */
+async function loadAdmin(){
+    const list = document.getElementById("adminList");
+    if(!list) return;
+
+    const snap = await getDocs(collection(db,"proofs"));
+    list.innerHTML="";
+
+    snap.forEach(d=>{
+        const data = d.data();
+        list.innerHTML += `
+        <div class="card">
+            <b>${data.user}</b>
+            <button onclick="removeProof('${d.id}')">Sil</button>
+        </div>`;
+    });
+}
+
+window.removeProof = async function(id){
+    await deleteDoc(doc(db,"proofs",id));
+    loadAdmin();
+}
+
+/* SAYFA YÜKLE */
+loadPublic();
