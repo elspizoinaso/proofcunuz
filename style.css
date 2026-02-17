@@ -1,62 +1,57 @@
-body {
+body{
     margin:0;
-    background:#0f172a;
+    background:#0b1120;
     font-family:Arial;
     color:white;
 }
 
-.container {
-    width:90%;
-    max-width:500px;
-    margin:50px auto;
-    background:#1e293b;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 0 30px rgba(0,0,0,0.5);
-    animation:fadeIn 1s ease;
+header{
+    background:#020617;
+    padding:15px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    border-bottom:1px solid #1e293b;
 }
 
-input {
-    width:100%;
-    padding:12px;
-    margin:10px 0;
+.container{
+    width:95%;
+    max-width:900px;
+    margin:20px auto;
+}
+
+.card{
+    background:#111827;
+    padding:15px;
+    margin-top:15px;
+    border-radius:10px;
+    animation:fade .4s ease;
+}
+
+button{
+    background:#38bdf8;
     border:none;
-    border-radius:8px;
-    background:#334155;
+    padding:10px 15px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-top:5px;
+}
+
+button:hover{
+    background:#0ea5e9;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border-radius:6px;
+    border:none;
+    background:#1f2937;
     color:white;
 }
 
-button {
-    width:100%;
-    padding:12px;
-    background:#38bdf8;
-    border:none;
-    border-radius:8px;
-    color:black;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-button:hover {
-    background:#0ea5e9;
-    transform:scale(1.05);
-}
-
-.proofCard {
-    background:#334155;
-    padding:10px;
-    margin-top:10px;
-    border-radius:8px;
-    animation:slideUp 0.4s ease;
-}
-
-@keyframes fadeIn {
-    from {opacity:0; transform:translateY(20px);}
-    to {opacity:1;}
-}
-
-@keyframes slideUp {
-    from {opacity:0; transform:translateY(30px);}
-    to {opacity:1;}
+@keyframes fade{
+    from{opacity:0;transform:translateY(15px);}
+    to{opacity:1;}
 }
